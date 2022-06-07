@@ -157,7 +157,7 @@ class Profile extends GetView<ProfileController> {
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   child: LinearPercentIndicator(
                     lineHeight: 18.0,
-                    percent: user.mannerScore / 100, // TODO: 온도
+                    percent: user.mannerScore / 100,
                     center: Text(
                       "${user.mannerScore}°C",
                       style: TextStyle(fontSize: 12.0),
@@ -167,7 +167,7 @@ class Profile extends GetView<ProfileController> {
                       child: Icon(
                         Icons.mood,
                         size: 25,
-                      ), // TODO: 온도에 따라 바꾸기
+                      ),
                     ),
                     backgroundColor: Colors.grey.shade300,
                     progressColor: Colors.orangeAccent,
@@ -211,20 +211,7 @@ class Profile extends GetView<ProfileController> {
               buildMenuListTile(
                   "계좌 관리", () => Get.toNamed(Routes.ACCOUNT_MANAGE)),
               Divider(),
-              buildMenuListTile("수령 위치 관리", () => print("hello1")),
-              Divider(),
               buildMenuListTile("친구 관리", () => Get.toNamed(Routes.FRIEND)),
-              Divider(),
-              buildMenuListTile("받은 평가", () => print("hello2")),
-              Divider(),
-              buildMenuListTile("생활 공유", () => print("hello3")),
-              Divider(),
-              buildMenuListTile(
-                  "다른 사용자 프로필 테스트",
-                  () => Get.toNamed(Routes.OTHER_USER_PROFILE,
-                      arguments: {"accountId": 100})),
-              Divider(),
-              buildMenuListTile("신고하기 테스트", () => Get.toNamed(Routes.REPORT)),
             ],
           ),
         ],

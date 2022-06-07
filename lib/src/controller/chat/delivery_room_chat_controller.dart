@@ -29,6 +29,7 @@ class DeliveryRoomChatController extends GetxController {
   void onClose() {
     Logger().w("disconnect socket");
     socket.emit('disconnect', deliveryRoomId);
+    socket.close();
     socket.disconnect();
     super.onClose();
   }
@@ -36,7 +37,6 @@ class DeliveryRoomChatController extends GetxController {
   Future<void> socketInit() async {
     try {
       String hostName = dotenv.get('CHAT_SERVER_HOST');
-      // String hostName = 'http://192.168.219.109:8000';
       String jwtToken = SharedPrefsUtil.instance.getString('accessToken')!;
 
       socket = io(

@@ -23,7 +23,8 @@ class CommunityController extends GetxController {
     Post(
       category: postCategories[2],
       content: '매운간장 먹고싶습니다',
-      writer: Writer(nickname: '아구몬', accountId: 123, mannerScore: 36.5),
+      writer: Writer(
+          nickname: '아구몬', accountId: 123, mannerScore: 36.5, profileImage: ''),
       createdDateTime: DateTime.now(),
       postId: 13,
     ),
@@ -110,7 +111,8 @@ class CommunityController extends GetxController {
       posts.add(Post(
         category: '',
         content: '',
-        writer: Writer(accountId: 123, nickname: '', mannerScore: 13),
+        writer: Writer(
+            accountId: 123, nickname: '', mannerScore: 13, profileImage: ''),
         createdDateTime: DateTime.now(),
         postId: 123,
       ));

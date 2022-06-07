@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_delivery/src/utils/image_util.dart';
 
 class ExpandedImagePage extends StatelessWidget {
   const ExpandedImagePage({Key? key}) : super(key: key);
@@ -35,11 +36,7 @@ class ExpandedImagePage extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.grey,
             image: DecorationImage(
-              fit: BoxFit.cover,
-              image: imageURL.substring(0, 4) == "http"
-                  ? NetworkImage(imageURL)
-                  : FileImage(File(imageURL)) as ImageProvider,
-            ),
+                fit: BoxFit.cover, image: customNetworkImage(imageURL)),
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
         ),
