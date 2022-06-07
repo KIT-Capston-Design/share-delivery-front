@@ -84,6 +84,7 @@ class DeliveryRecruit extends GetView<DeliveryRecruitController> {
                 backgroundColor: Colors.red,
                 colorText: Colors.white,
                 snackPosition: SnackPosition.BOTTOM);
+            return;
           }
           await DeliveryRecruitController.to.completeRecurit();
           await DeliveryOrderController.to
