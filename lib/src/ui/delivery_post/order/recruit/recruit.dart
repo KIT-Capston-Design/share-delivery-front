@@ -79,6 +79,12 @@ class DeliveryRecruit extends GetView<DeliveryRecruitController> {
           primary: Colors.orange,
         ),
         onPressed: () async {
+          if (DeliveryRecruitController.to.orderMenuList.length == 1) {
+            Get.snackbar('오류', '혼자서 주문을 진행할 수 없습니다.',
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+                snackPosition: SnackPosition.BOTTOM);
+          }
           await DeliveryRecruitController.to.completeRecurit();
           await DeliveryOrderController.to
               .changeStatus(DeliveryRoomState.WAITING_PAYMENT);
