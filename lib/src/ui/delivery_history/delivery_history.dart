@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:share_delivery/src/controller/delivery_history/delivery_history_controller.dart';
 import 'package:share_delivery/src/data/repository/delivery_history/delivery_history_res_dto.dart';
-
 import 'package:share_delivery/src/routes/route.dart';
 import 'package:share_delivery/src/services/setting_service.dart';
+import 'package:share_delivery/src/ui/theme/text_theme.dart';
 
 class DeliveryHistory extends GetView<DeliveryHistoryController> {
   const DeliveryHistory({Key? key}) : super(key: key);
@@ -24,10 +23,7 @@ class DeliveryHistory extends GetView<DeliveryHistoryController> {
           ),
           title: Text(
             "내 배달",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-            ),
+            style: appBarTitle,
           ),
           backgroundColor: Colors.transparent,
           bottom: PreferredSize(

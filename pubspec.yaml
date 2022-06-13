@@ -81,5 +81,5 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
 
 flutter_native_splash:
-  color: "#FF0000"
-  image: assets/images/splash/bbq.png
+  color: "#FFFFFF"
+  image: assets/images/splash/delivery_icon.png

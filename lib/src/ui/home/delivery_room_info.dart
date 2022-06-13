@@ -9,7 +9,6 @@ import 'package:share_delivery/src/ui/theme/text_theme.dart';
 import 'package:share_delivery/src/ui/widgets/show_specific_spot.dart';
 import 'package:share_delivery/src/utils/categories.dart';
 import 'package:share_delivery/src/utils/time_util.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DeliveryRoomInfo extends GetView<HomeController> {
@@ -39,25 +38,29 @@ class DeliveryRoomInfo extends GetView<HomeController> {
       elevation: 0,
       shape: const Border(bottom: BorderSide(color: Colors.black12, width: 1)),
       backgroundColor: Colors.white,
+      title: Text(
+        "모집글 상세보기",
+        style: appBarTitle,
+      ),
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
         onPressed: () => Get.back(),
       ),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.share, color: Colors.black),
-          onPressed: () async {
-            print('DeliveryRoomInfo.appBar - share');
-            final result = await Share.shareWithResult("www.naver.com");
-
-            print(result.status);
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.more_vert, color: Colors.black),
-          onPressed: () {},
-        ),
-      ],
+      // actions: [
+      //   IconButton(
+      //     icon: Icon(Icons.share, color: Colors.black),
+      //     onPressed: () async {
+      //       print('DeliveryRoomInfo.appBar - share');
+      //       final result = await Share.shareWithResult("www.naver.com");
+      //
+      //       print(result.status);
+      //     },
+      //   ),
+      //   IconButton(
+      //     icon: Icon(Icons.more_vert, color: Colors.black),
+      //     onPressed: () {},
+      //   ),
+      // ],
     );
   }
 

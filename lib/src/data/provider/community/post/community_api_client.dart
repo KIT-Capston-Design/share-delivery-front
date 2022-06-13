@@ -4,6 +4,7 @@ import 'dart:io';
 import "package:dio/dio.dart";
 import "package:retrofit/retrofit.dart";
 import 'package:share_delivery/src/data/model/community/comment/comment.dart';
+import 'package:share_delivery/src/data/model/community/comment/comment_update_request_dto.dart';
 import 'package:share_delivery/src/data/model/community/comment_register_request_dto/comment_register_request_dto.dart';
 import 'package:share_delivery/src/data/model/community/post/post.dart';
 import 'package:share_delivery/src/data/model/community/post_detail/post_detail.dart';
@@ -80,10 +81,10 @@ abstract class CommunityApiClient {
   );
 
   // 댓글 수정
-  @GET("/api/comments/{commentId}")
+  @PATCH("/api/comments/{commentId}")
   Future<Comment> updateComment(
     @Path() int commentId,
-    @Body() String content,
+    @Body() CommentUpdateRequestDTO comment,
   );
 
   // 댓글 삭제

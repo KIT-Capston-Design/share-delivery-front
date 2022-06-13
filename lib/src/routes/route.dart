@@ -20,6 +20,7 @@ import 'package:share_delivery/src/bindings/root_binding.dart';
 import 'package:share_delivery/src/bindings/widgets/pick_user_location_binding.dart';
 import 'package:share_delivery/src/root.dart';
 import 'package:share_delivery/src/ui/community/expanded_post_image.dart';
+import 'package:share_delivery/src/ui/community/post_detail/edit_comment.dart';
 import 'package:share_delivery/src/ui/community/post_detail/post_detail.dart';
 import 'package:share_delivery/src/ui/community/post_register/post_register.dart';
 import 'package:share_delivery/src/ui/community/post_register/setting_post_category.dart';
@@ -92,6 +93,7 @@ abstract class Routes {
   static const POST_DETAIL = "/postDetail";
   static const WRITING_COMMENT = "/writingComment";
   static const EXPANDED_POST_IMAGE = "/expandedPostImage";
+  static const EDIT_COMMENT = "/editComment";
 
   // 친구 관리
   static const FRIEND = "/friend";
@@ -253,6 +255,10 @@ class AppPages {
     GetPage(
       name: Routes.REPORT_USER,
       page: () => const ReportUser(),
-    )
+    ),
+    GetPage(
+      name: Routes.EDIT_COMMENT,
+      page: () => const EditComment(),
+    ),
   ];
 }

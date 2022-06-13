@@ -12,23 +12,14 @@ class CommunityController extends GetxController {
 
   CommunityRepository repository;
 
-  CommunityController({required this.repository});
+  CommunityController({required this.repository});d
 
   // UI 관련
   Rx<RefreshController> refresher = RefreshController(initialRefresh: true).obs;
 
   // 게시글 관련
   RxString category = postCategories[0].obs;
-  var posts = <Post>[
-    Post(
-      category: postCategories[2],
-      content: '매운간장 먹고싶습니다',
-      writer: Writer(
-          nickname: '아구몬', accountId: 123, mannerScore: 36.5, profileImage: ''),
-      createdDateTime: DateTime.now(),
-      postId: 13,
-    ),
-  ].obs;
+  var posts = <Post>[].obs;
   UserLocation? userLocation;
 
   Future<void> onRefresh() async {
@@ -98,49 +89,14 @@ class CommunityController extends GetxController {
             userLocation!, category.value, posts.last.createdDateTime);
       }
 
-      // TODO : 임시로 해둠 = 삭제할 것
-      await Future.delayed(Duration(milliseconds: 500));
-
       if (result.isEmpty) {
         // GetSnackbar.on("알림", "검색된 게시글이 없습니다!");
         refresher.value.loadNoData();
         return;
       }
 
-      posts.value = result;
-      posts.add(Post(
-        category: '',
-        content: '',
-        writer: Writer(
-            accountId: 123, nickname: '', mannerScore: 13, profileImage: ''),
-        createdDateTime: DateTime.now(),
-        postId: 123,
-      ));
-
-      refresher.value.loadComplete();
-    } catch (e) {
-      print(e);
-      refresher.value.loadFailed();
-    }
-  }
-
-  void setCategory(String category) {
-    this.category.value =
-        this.category.value != category ? category : postCategories[0];
-    onRefresh();
-  }
-
-  bool isExistUserLocation() {
-    userLocation ??= repository.getCurrentUserLocation();
-    Logger().i(userLocation);
-
-    if (userLocation == null) {
-      GetSnackbar.on("알림", "위치 설정을 먼저 해주세요!");
-      return false;
-    }
-
+      posts.value = posts + result;
     return true;
-  }
 
   void addPost(Post post) {
     posts.insert(0, post);

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:share_delivery/src/controller/evaluate_and_report/evaluate_and_report_controller.dart';
 import 'package:share_delivery/src/data/repository/report/report_repository.dart';
 import 'package:share_delivery/src/utils/categories.dart';
 
@@ -13,6 +14,7 @@ class ReportController extends GetxController {
 
   Future<void> createReport() async {
     int reportedAccountId = Get.arguments["reportedAccountId"];
+    print('ReportController.createReport - $reportedAccountId');
 
     print(
         "$reportedAccountId 번 유저를 신고합니다 - 죄목 : ${reportCategories[selectedIndex.value]}");
@@ -22,5 +24,7 @@ class ReportController extends GetxController {
       reportCategories[selectedIndex.value],
       "DELIVERY_ROOM",
     );
+
+    EvaluateAndReportController.to.doneReportByAccountId(reportedAccountId);
   }
 }

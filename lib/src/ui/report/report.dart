@@ -71,8 +71,9 @@ class Report extends GetView<ReportController> {
       title: Text("유저 신고", style: appBarTitle),
       actions: [
         TextButton(
-          onPressed: () {
-            controller.createReport();
+          onPressed: ()async {
+            await controller.createReport();
+            Get.back();
           },
           child: Text("완료"),
           style: TextButton.styleFrom(

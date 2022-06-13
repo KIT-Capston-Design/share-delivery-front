@@ -56,15 +56,16 @@ class AuthenticationRepository {
   }
 
   Future<User?> login(String phoneNumber, String verificationCode) async {
-    Logger().i("login", NotificationController.to.fcmToken);
+    // Logger().i("login", NotificationController.to.fcmToken);
     LoginReqDTO loginReqDTO = LoginReqDTO(
-        phoneNumber: phoneNumber,
-        verificationCode: verificationCode,
-        fcmToken: NotificationController.to.fcmToken);
+      phoneNumber: phoneNumber,
+      verificationCode: verificationCode,
+      fcmToken: "NotificationController.to.fcmToken",
+    );
 
     User? account;
 
-    await apiClient.login(loginReqDTO).then((result) {
+    account = await apiClient.login(loginReqDTO).then((result) {
       // 로그인 성공
       Logger().i(result);
       // 1. 사용자 계정 로컬에 저장
@@ -73,12 +74,12 @@ class AuthenticationRepository {
       // 2. access/refresh token 저장
       localClient.saveTokens(result.accessToken, result.refreshToken);
 
-      account = result.account;
+      return result.account;
     }).catchError((Object obj) {
       // 로그인 실패
       loggerErr(obj);
       // Logger().e(err);
-      account = null;
+      return null;
     });
 
     // 로그인 성공

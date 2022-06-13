@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_delivery/src/utils/image_util.dart';
 
 class ExpandedPostImage extends StatefulWidget {
   const ExpandedPostImage({Key? key}) : super(key: key);
@@ -37,8 +38,8 @@ class _ExpandedPostImageState extends State<ExpandedPostImage> {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: imageURL.substring(0, 4) == "http"
-              ? NetworkImage(imageURL)
+          image: imageURL.startsWith("/images")
+              ? NetworkImage(imagePathWithHost(imageURL))
               : FileImage(File(imageURL)) as ImageProvider, // 배경 이미지
         ),
       ),

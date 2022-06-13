@@ -264,6 +264,7 @@ class Community extends GetView<CommunityController> {
           width: 0.5,
         ),
       ),
+      title: Text("생활 공유", style: appBarTitle),
       elevation: 0,
       backgroundColor: Colors.white,
       // titleSpacing: 0.0,

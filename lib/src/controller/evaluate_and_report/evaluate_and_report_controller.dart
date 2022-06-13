@@ -1,26 +1,41 @@
 import 'package:get/get.dart';
+import 'package:share_delivery/src/data/model/profile/profile.dart';
 import 'package:share_delivery/src/data/repository/evaluate_and_report/evaluate_and_report_repository.dart';
 
 class EvaluateAndReportController extends GetxController {
+  static EvaluateAndReportController get to => Get.find();
+
   EvaluateAndReportRepository repository;
 
   EvaluateAndReportController({required this.repository});
 
   RxBool alreadyEvaluatingDone = false.obs;
   RxBool alreadyReportingDone = false.obs;
+  RxBool isLoading = false.obs;
 
-  var evaluateList = <Evaluation>[
-    Evaluation(2, ""),
-    Evaluation(3, ""),
-  ].obs;
+  var users = <ProfileModel>[].obs;
+  var evaluateList = <Evaluation>[].obs;
+  var reportDoneList = <bool>[].obs;
 
-  // final RxList<List<bool>> selected = <List<bool>>[
-  //   [true, false, false],
-  //   [true, false, false],
-  // ].obs;
+  @override
+  void onInit() async {
+    super.onInit();
 
-  // 모집글 등록을 위한 상세 정보
-  // final RxList<bool> selected = <bool>[false, false, false].obs;
+    if (Get.arguments == null) {
+      return;
+    }
+
+    List<int> list = Get.arguments;
+    users.value = await repository.getUserInfo(list);
+
+    for (int i = 0; i < users.length; i++) {
+      evaluateList.add(Evaluation(users[i].accountId, ""));
+    }
+
+    reportDoneList = RxList<bool>.filled(evaluateList.length, false);
+
+    isLoading.value = true;
+  }
 
   // 평가 선택하기
   void pickEvaluationCategoryEachUser(int idx, int selectedIdx) {
@@ -61,6 +76,17 @@ class EvaluateAndReportController extends GetxController {
   void reportUser(int accountId, String content) {
     repository.reportUser(accountId, content);
     alreadyReportingDone.value = true;
+  }
+
+  void doneReportByAccountId(int id) {
+    for (int i = 0; i < evaluateList.length; i++) {
+      print(evaluateList[i].accountId);
+      print(id);
+
+      if (evaluateList[i].accountId == id) {
+        reportDoneList[i] = true;
+      }
+    }
   }
 }
 

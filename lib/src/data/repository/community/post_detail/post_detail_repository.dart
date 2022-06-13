@@ -1,4 +1,5 @@
 import 'package:share_delivery/src/data/model/community/comment/comment.dart';
+import 'package:share_delivery/src/data/model/community/comment/comment_update_request_dto.dart';
 import 'package:share_delivery/src/data/model/community/comment_register_request_dto/comment_register_request_dto.dart';
 import 'package:share_delivery/src/data/model/community/post_detail/post_detail.dart';
 import 'package:share_delivery/src/data/model/community/toggle_like_response_dto/toggle_like_response_dto.dart';
@@ -47,8 +48,10 @@ class PostDetailRepository {
 
   // 댓글 수정
   Future<void> updateComment(int commentId, String content) async {
-    print('PostDetailRepository.updateComment');
-    await apiClient.updateComment(commentId, content);
+    await apiClient.updateComment(
+      commentId,
+      CommentUpdateRequestDTO(content: content),
+    );
   }
 
   // 댓글 삭제

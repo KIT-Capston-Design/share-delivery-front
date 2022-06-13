@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:images_picker/images_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:logger/logger.dart';
 import 'package:share_delivery/src/controller/community/community_controller.dart';
 import 'package:share_delivery/src/data/model/community/post/post.dart';
 import 'package:share_delivery/src/data/model/community/post_detail/post_detail.dart';
@@ -25,6 +26,8 @@ class PostRegisterController extends GetxController {
 
   // 첨부 이미지
   var images = <String>[].obs;
+  var prevImages = <String>[].obs;
+  var deletedImages = <String>[];
 
   // UI 관련
   RxBool isAbleRegisterPost = false.obs;
@@ -68,6 +71,8 @@ class PostRegisterController extends GetxController {
         images.add(media.path);
       }
     }
+
+    Logger().i(images);
   }
 
   // 게시글 등록
@@ -126,6 +131,7 @@ class PostRegisterController extends GetxController {
       userLocation,
       content.value.text,
       category.value,
+      deletedImages,
       images,
     );
 
@@ -145,16 +151,27 @@ class PostRegisterController extends GetxController {
   }
 
   void deleteImage(String targetImageURL) {
-    images.remove(targetImageURL);
+    if (images.contains(targetImageURL)) {
+      images.remove(targetImageURL);
+      return;
+    }
+
+    prevImages.remove(targetImageURL);
+    deletedImages.add(targetImageURL);
   }
 
   void loadPostAndPostDetail(Post post, PostDetail postDetail) {
     content.value.text = post.content;
     content.value.selection = TextSelection.fromPosition(
         TextPosition(offset: content.value.text.length));
-    validateRegisterPost(content.value.text);
+
+    print('PostRegisterController.loadPostAndPostDetail');
+
     category.value = post.category;
-    images.value = postDetail.images;
+    prevImages.value = postDetail.images.toList();
+    // deletedImages = postDetail.images;
+
+    validateRegisterPost(post.content);
     // sharePlace.value = postDetail.sharePlace
   }
 }

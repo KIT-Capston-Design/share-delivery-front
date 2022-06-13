@@ -14,197 +14,6 @@ import 'package:share_delivery/src/ui/theme/container_theme.dart';
 import 'package:share_delivery/src/ui/theme/text_theme.dart';
 import 'package:share_delivery/src/utils/dio_util.dart';
 
-// class PostRegister extends StatefulWidget {
-//   const PostRegister({Key? key}) : super(key: key);
-//
-//   @override
-//   State<PostRegister> createState() => _PostRegisterState();
-// }
-//
-// class _PostRegisterState extends State<PostRegister> {
-//   Alignment alignment = Alignment.bottomCenter;
-//   final FocusNode _node = FocusNode();
-//
-//   final double keyboardHeight =
-//       PersistentKeyboardHeight.of(Get.context!).keyboardHeight;
-//   static const double bottomSheetHeight = 45;
-//   late final double alignY;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//
-//     alignY = (keyboardHeight + bottomSheetHeight / 2) / Get.height - 0.5;
-//
-//     _node.addListener(() {
-//       setState(() {
-//         alignment =
-//             _node.hasFocus ? Alignment(0, alignY) : Alignment.bottomCenter;
-//       });
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Scaffold(
-//         resizeToAvoidBottomInset: false,
-//         appBar: appBar(),
-//         body: Container(
-//           color: Colors.white,
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             children: [
-//               Container(
-//                 height: 70,
-//                 width: double.infinity,
-//                 margin: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-//                 decoration: bottomBorderBox,
-//                 child: GestureDetector(
-//                   behavior: HitTestBehavior.translucent,
-//                   onTap: () {
-//                     // TODO : 게시글 주제 설정 페이지로 이동
-//                     print('_PostRegisterState.build');
-//                     Get.toNamed(Routes.SETTING_POST_CATEGORY);
-//                   },
-//                   child: Row(
-//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                     children: [
-//                       Text("글의 주제를 선택해주세요!", style: postRegisterCategory),
-//                       Icon(Icons.keyboard_arrow_right),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Container(color: Colors.blue, child: Divider(height: 0)),
-//               TextField(focusNode: _node),
-//               // Expanded(
-//               //   child: AnimatedAlign(
-//               //     alignment: alignment,
-//               //     curve: Curves.decelerate,
-//               //     // curve: Curves.easeOutQuad,
-//               //     duration: const Duration(milliseconds: 200),
-//               //     child: bottomSheet(),
-//               //   ),
-//               // ),
-//             ],
-//           ),
-//         ),
-//         bottomSheet: bottomSheetV2(context),
-//       ),
-//     );
-//   }
-//
-//   PreferredSizeWidget appBar() {
-//     return AppBar(
-//       shape: const Border(bottom: BorderSide(color: Colors.black12, width: 1)),
-//       elevation: 0,
-//       backgroundColor: Colors.white,
-//       leading: IconButton(
-//         onPressed: () => Get.back(),
-//         icon: Icon(
-//           Icons.close,
-//           color: Colors.black,
-//         ),
-//       ),
-//       title: const Text("생활 공유", style: postRegisterTitle),
-//       actions: [
-//         TextButton(
-//           onPressed: null,
-//           child: Text("완료", style: postRegisterDone),
-//         ),
-//       ],
-//     );
-//   }
-//
-//   Widget bottomSheet() {
-//     return Container(
-//       width: double.infinity,
-//       decoration: topBorderBox,
-//       child: SizedBox(
-//         height: bottomSheetHeight,
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Row(
-//               children: [
-//                 const SizedBox(width: 10),
-//                 GestureDetector(
-//                   child: Row(
-//                     children: [
-//                       const Icon(Icons.image_outlined),
-//                       Text("0 / 10"),
-//                     ],
-//                   ),
-//                 ),
-//                 const SizedBox(width: 10),
-//                 GestureDetector(
-//                   child: Row(
-//                     children: [
-//                       const Icon(Icons.add_location_alt_outlined),
-//                       Text("0 / 1"),
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             IconButton(
-//               onPressed: () => FocusManager.instance.primaryFocus?.unfocus(),
-//               icon: const Icon(Icons.keyboard_hide_outlined),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//   Widget bottomSheetV2(BuildContext ctx) {
-//     return AnimatedPadding(
-//       padding: MediaQuery.of(ctx).viewInsets,
-//       duration: const Duration(milliseconds: 0),
-//       curve: Curves.decelerate,
-//       child: Container(
-//         width: double.infinity,
-//         decoration: topBorderBox,
-//         child: SizedBox(
-//           height: bottomSheetHeight,
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Row(
-//                 children: [
-//                   const SizedBox(width: 10),
-//                   GestureDetector(
-//                     child: Row(
-//                       children: [
-//                         const Icon(Icons.image_outlined),
-//                         Text("0 / 10"),
-//                       ],
-//                     ),
-//                   ),
-//                   const SizedBox(width: 10),
-//                   GestureDetector(
-//                     child: Row(
-//                       children: [
-//                         const Icon(Icons.add_location_alt_outlined),
-//                         Text("0 / 1"),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               IconButton(
-//                 onPressed: () => FocusManager.instance.primaryFocus?.unfocus(),
-//                 icon: const Icon(Icons.keyboard_hide_outlined),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class PostRegister extends GetView<PostRegisterController> {
   final Post? post;
   final PostDetail? postDetail;
@@ -304,20 +113,34 @@ class PostRegister extends GetView<PostRegisterController> {
     double imageSize = Get.width < 400 ? 70.0 : 90.0;
     double imageMargin = Get.width < 400 ? 10.0 : 12.0;
 
-    return controller.images.isNotEmpty
+    print(controller.images);
+    // List<String> list =
+    //     controller.prevImages.toList() + controller.images.toList();
+
+    // print('PostRegister.postImages - ${list.length}');
+    return controller.prevImages.isNotEmpty || controller.images.isNotEmpty
         ? SizedBox(
             height: imageSize + imageMargin * 2,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: controller.images.length,
+              itemCount:
+                  controller.prevImages.length + controller.images.length,
               itemBuilder: (_, i) {
-                return PostImage(
-                  index: i,
-                  imageURLs: controller.images,
-                  deleteButton: true,
-                  size: imageSize,
-                  margin: imageMargin,
-                );
+                return i < controller.prevImages.length
+                    ? PostImage(
+                        index: i,
+                        imageURLs: controller.prevImages,
+                        deleteButton: true,
+                        size: imageSize,
+                        margin: imageMargin,
+                      )
+                    : PostImage(
+                        index: i - controller.prevImages.length,
+                        imageURLs: controller.images,
+                        deleteButton: true,
+                        size: imageSize,
+                        margin: imageMargin,
+                      );
               },
             ),
           )
@@ -354,6 +177,7 @@ class PostRegister extends GetView<PostRegisterController> {
             await 0.4.delay();
           }
 
+          if (Get.isBottomSheetOpen!) Get.back();
           Get.back();
         },
         icon: const Icon(Icons.close, color: Colors.black),
@@ -407,22 +231,23 @@ class PostRegister extends GetView<PostRegisterController> {
                     child: Row(
                       children: [
                         const Icon(Icons.image_outlined),
-                        Text(" ${controller.images.length} / 10"),
+                        Text(
+                            " ${controller.images.length + controller.prevImages.length} / 10"),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 15),
-                  GestureDetector(
-                    onTap: () {
-                      print("장소 등록하기");
-                    },
-                    child: Row(
-                      children: [
-                        const Icon(Icons.location_on_outlined),
-                        Text(" 0 / 1"),
-                      ],
-                    ),
-                  ),
+                  // const SizedBox(width: 15),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     print("장소 등록하기");
+                  //   },
+                  //   child: Row(
+                  //     children: [
+                  //       const Icon(Icons.location_on_outlined),
+                  //       Text(" 0 / 1"),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
               MediaQuery.of(ctx).viewInsets.bottom <= 100

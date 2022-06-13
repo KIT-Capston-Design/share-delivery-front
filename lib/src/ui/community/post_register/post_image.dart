@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_delivery/src/controller/community/post_register/post_register_controller.dart';
 import 'package:share_delivery/src/routes/route.dart';
+import 'package:share_delivery/src/utils/image_util.dart';
 
 class PostImage extends StatelessWidget {
   final int index;
@@ -23,6 +24,7 @@ class PostImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('PostImage.build - $index');
     String imageURL = imageURLs[index];
 
     return GestureDetector(
@@ -41,8 +43,8 @@ class PostImage extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: imageURL.startsWith("http")
-                    ? NetworkImage(imageURL)
+                image: imageURL.startsWith("/images")
+                    ? NetworkImage(imagePathWithHost(imageURL))
                     : FileImage(File(imageURL)) as ImageProvider,
               ),
               borderRadius: BorderRadius.all(Radius.circular(8.0)),

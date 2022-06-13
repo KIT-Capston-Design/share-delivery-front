@@ -5,10 +5,12 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:logger/logger.dart';
 import 'package:share_delivery/src/controller/community/post_detail_controller.dart';
 import 'package:share_delivery/src/data/model/community/comment/comment.dart';
+import 'package:share_delivery/src/routes/route.dart';
 import 'package:share_delivery/src/ui/community/post_detail/post_detail.dart';
 import 'package:share_delivery/src/ui/theme/button_theme.dart';
 import 'package:share_delivery/src/ui/theme/container_theme.dart';
 import 'package:share_delivery/src/ui/theme/text_theme.dart';
+import 'package:share_delivery/src/utils/image_util.dart';
 import 'package:share_delivery/src/utils/time_util.dart';
 
 class WritingComment extends GetView<PostDetailController> {
@@ -66,8 +68,9 @@ class WritingComment extends GetView<PostDetailController> {
   }
 
   Widget comments() {
-    int parentId = Get.arguments;
+    int parentId = controller.currentWritingCommentParentId.value;
     List<Comment> group = controller.getCommentGroup(parentId);
+    print('WritingComment.comments - $parentId');
 
     return ListView.builder(
       shrinkWrap: true,
@@ -80,6 +83,8 @@ class WritingComment extends GetView<PostDetailController> {
   }
 
   Widget parentComment(Comment comment) {
+    String state = comment.state;
+
     return Padding(
       padding: EdgeInsets.only(
         top: 20,
@@ -92,11 +97,20 @@ class WritingComment extends GetView<PostDetailController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
+                onTap: state != "DELETED" ? () {} : null,
                 child: Padding(
                   padding: EdgeInsets.only(right: normal),
                   child: CircleAvatar(
                     radius: parentAvatar,
-                    backgroundColor: Colors.grey,
+                    backgroundImage: state != "DELETED"
+                        ? comment.writer.profileImage == ''
+                            ? randomProfileImage()
+                            : customNetworkImage(comment.writer.profileImage)
+                        : null,
+                    child: state != "DELETED"
+                        ? null
+                        : Icon(Icons.block_rounded, color: Colors.black),
+                    backgroundColor: Colors.grey.shade300,
                   ),
                 ),
               ),
@@ -109,7 +123,9 @@ class WritingComment extends GetView<PostDetailController> {
                       child: Row(
                         children: [
                           Text(
-                            comment.writer.nickname,
+                            state != "DELETED"
+                                ? comment.writer.nickname
+                                : "알 수 없는 사용자",
                             style: postTitleStyle,
                           ),
                           const SizedBox(width: 5),
@@ -148,7 +164,7 @@ class WritingComment extends GetView<PostDetailController> {
                   ],
                 ),
               ),
-              commentMoreVert(comment),
+              state != "DELETED" ? commentMoreVert(comment) : SizedBox.shrink(),
             ],
           ),
           Container(
@@ -160,7 +176,7 @@ class WritingComment extends GetView<PostDetailController> {
               top: 6.0,
             ),
             child: Text(
-              comment.content,
+              state != "DELETED" ? comment.content : "삭제된 댓글입니다.",
               style: commentStyle,
             ),
           ),
@@ -182,6 +198,8 @@ class WritingComment extends GetView<PostDetailController> {
   }
 
   Widget childComment(Comment comment) {
+    String state = comment.state;
+
     return Padding(
       padding: EdgeInsets.only(
         top: normal,
@@ -194,11 +212,20 @@ class WritingComment extends GetView<PostDetailController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
+                onTap: state != "DELETED" ? () {} : null,
                 child: Padding(
                   padding: EdgeInsets.only(right: normal),
                   child: CircleAvatar(
                     radius: childAvatar,
-                    backgroundColor: Colors.grey,
+                    backgroundImage: state != "DELETED"
+                        ? comment.writer.profileImage == ''
+                            ? randomProfileImage()
+                            : customNetworkImage(comment.writer.profileImage)
+                        : null,
+                    child: state != "DELETED"
+                        ? null
+                        : Icon(Icons.block_rounded, color: Colors.black),
+                    backgroundColor: Colors.grey.shade300,
                   ),
                 ),
               ),
@@ -211,7 +238,9 @@ class WritingComment extends GetView<PostDetailController> {
                       child: Row(
                         children: [
                           Text(
-                            comment.writer.nickname,
+                            state != "DELETED"
+                                ? comment.writer.nickname
+                                : "알 수 없는 사용자",
                             style: postTitleStyle,
                           ),
                           const SizedBox(width: 5),
@@ -250,7 +279,7 @@ class WritingComment extends GetView<PostDetailController> {
                   ],
                 ),
               ),
-              commentMoreVert(comment),
+              state != "DELETED" ? commentMoreVert(comment) : SizedBox.shrink(),
             ],
           ),
           Container(
@@ -261,7 +290,7 @@ class WritingComment extends GetView<PostDetailController> {
               right: normal,
             ),
             child: Text(
-              comment.content,
+              state != "DELETED" ? comment.content : "삭제된 댓글입니다.",
               style: commentStyle,
             ),
           ),
@@ -322,7 +351,8 @@ class WritingComment extends GetView<PostDetailController> {
         children: [
           bottomSheetAction(
             func: () {
-              print('PostDetail.writerCommentActionSheet - 수정');
+              if (Get.isBottomSheetOpen!) Get.back();
+              Get.toNamed(Routes.EDIT_COMMENT);
               // TODO: 댓글 수정페이지
             },
             color: Colors.blue,
@@ -460,30 +490,31 @@ class WritingComment extends GetView<PostDetailController> {
           decoration: topBorderBox,
           child: Row(
             children: [
-              IconButton(
-                onPressed: () {},
-                padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
-                // padding: EdgeInsets.zero,
-                constraints: BoxConstraints(),
-                icon: Icon(
-                  Icons.location_on_outlined,
-                  size: iconSize,
-                  color: Colors.grey[600],
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                // padding: EdgeInsets.zero,
-                padding: const EdgeInsets.fromLTRB(5, 0, 10, 0),
-                constraints: BoxConstraints(),
-                icon: Icon(
-                  Icons.image_outlined,
-                  size: iconSize,
-                  color: Colors.grey[600],
-                ),
-              ),
+              // IconButton(
+              //   onPressed: () {},
+              //   padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
+              //   // padding: EdgeInsets.zero,
+              //   constraints: BoxConstraints(),
+              //   icon: Icon(
+              //     Icons.location_on_outlined,
+              //     size: iconSize,
+              //     color: Colors.grey[600],
+              //   ),
+              // ),
+              // IconButton(
+              //   onPressed: () {},
+              //   // padding: EdgeInsets.zero,
+              //   padding: const EdgeInsets.fromLTRB(5, 0, 10, 0),
+              //   constraints: BoxConstraints(),
+              //   icon: Icon(
+              //     Icons.image_outlined,
+              //     size: iconSize,
+              //     color: Colors.grey[600],
+              //   ),
+              // ),
+
               SizedBox(
-                width: Get.width - 90,
+                width: Get.width,
                 child: Card(
                   elevation: 0,
                   color: Colors.grey[100],
@@ -512,7 +543,8 @@ class WritingComment extends GetView<PostDetailController> {
                       suffixIcon: controller.onSendComment.value
                           ? IconButton(
                               onPressed: () async {
-                                int parentId = Get.arguments;
+                                int parentId = controller
+                                    .currentWritingCommentParentId.value;
                                 await controller.sendComment(parentId);
                               },
                               color: Colors.orange,
@@ -524,24 +556,6 @@ class WritingComment extends GetView<PostDetailController> {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(
-              //     bottom: 8.0,
-              //     right: 5.0,
-              //     left: 2,
-              //   ),
-              //   child: CircleAvatar(
-              //     radius: 25,
-              //     backgroundColor: Colors.orangeAccent,
-              //     child: IconButton(
-              //       icon: Icon(
-              //         Icons.mic,
-              //         color: Colors.white,
-              //       ),
-              //       onPressed: () {},
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -562,17 +576,20 @@ class WritingComment extends GetView<PostDetailController> {
             style: cancelBtn,
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (isPost) {
-                controller.deletePost();
+                await controller.deletePost();
               } else {
                 if (commentId == null) {
                   Logger().e("댓글 삭제를 위해서는 댓글 ID를 파라미터에 넣어줘야함");
                   return;
                 }
 
-                controller.deleteComment(commentId);
+                await controller.deleteComment(commentId);
               }
+
+              if (Get.isDialogOpen!) Get.back();
+              if (Get.isBottomSheetOpen!) Get.back();
             },
             child: Text("  삭제  "),
             style: deleteBtn,

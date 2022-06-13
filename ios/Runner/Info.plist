@@ -46,24 +46,26 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>NSAppTransportSecurity</key>
-            <dict>
-                <key>NSAllowsArbitraryLoads</key> <true/>
-                <key>NSAllowsArbitraryLoadsInWebContent</key> <true/>
-            </dict>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+			<key>NSAllowsArbitraryLoadsInWebContent</key>
+			<true/>
+		</dict>
 		<key>io.flutter.embedded_views_preview</key>
-        <string>YES</string>
-        <key>NSLocationWhenInUseUsageDescription</key>
-        <string>위치 정보가 필요합니다.</string>
-        <key>LSApplicationQueriesSchemes</key>
-        <array>
-          <string>https</string>
-          <string>http</string>
-        </array>
-        <key>NSCameraUsageDescription</key>
-        <string>Example usage description</string>
-        <key>NSMicrophoneUsageDescription</key>
-        <string>Example usage description</string>
-        <key>NSPhotoLibraryUsageDescription</key>
-        <string>Example usage description</string>
+		<string>YES</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>위치 정보가 필요합니다.</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>https</string>
+			<string>http</string>
+		</array>
+		<key>NSCameraUsageDescription</key>
+		<string>Example usage description</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Example usage description</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Example usage description</string>
 	</dict>
 </plist>

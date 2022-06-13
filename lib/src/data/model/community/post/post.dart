@@ -22,7 +22,7 @@ class Writer with _$Writer {
     required int accountId,
     required String nickname,
     required double mannerScore,
-    required String profileImage,
+    @Default("") String profileImage,
   }) = _Writer;
 
   factory Writer.fromJson(Map<String, dynamic> json) => _$WriterFromJson(json);

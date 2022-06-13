@@ -14,6 +14,7 @@ class Comment with _$Comment {
     required int likes,
     required bool isLiked,
     required DateTime createdDateTime,
+    required String state,
   }) = _Comment;
 
   factory Comment.fromJson(Map<String, dynamic> json) =>

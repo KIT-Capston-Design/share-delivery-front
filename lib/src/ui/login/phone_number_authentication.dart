@@ -45,7 +45,7 @@ class PhoneNumberAuthentication extends GetView<LoginController> {
                   ElevatedButton(
                     child: Text(
                       controller.onTextFieldSMS.value
-                          ? "인증문자 다시 받기 (04분 53초)"
+                          ? "인증문자 다시 받기"
                           : "인증문자 받기",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
@@ -64,7 +64,7 @@ class PhoneNumberAuthentication extends GetView<LoginController> {
                   ),
                   controller.onTextFieldSMS.value
                       ? authInputForm(context)
-                      : findAccountUsingEmail(),
+                      : SizedBox.shrink(),
                   SizedBox(height: Get.height < 700 ? 400 : 500),
                 ],
               ),

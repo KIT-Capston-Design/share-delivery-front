@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:share_delivery/src/controller/root_controller.dart';
 import 'package:share_delivery/src/data/repository/profile/app_setting/app_setting_repository.dart';
 import 'package:share_delivery/src/routes/route.dart';
 import 'package:share_delivery/src/ui/theme/button_theme.dart';
@@ -25,6 +26,7 @@ class AppSettingController extends GetxController {
       await 0.5.delay();
       Get.context!.loaderOverlay.hide();
       Get.offAllNamed(Routes.LOGIN);
+      RootController.to.isFirstOpenCommunity.value = true;
     }
   }
 
@@ -42,6 +44,7 @@ class AppSettingController extends GetxController {
       await 0.5.delay();
       Get.context!.loaderOverlay.hide();
       Get.offAllNamed(Routes.LOGIN);
+      RootController.to.isFirstOpenCommunity.value = true;
     }
   }
 

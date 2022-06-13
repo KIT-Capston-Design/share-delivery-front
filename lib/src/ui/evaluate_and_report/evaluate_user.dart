@@ -38,103 +38,114 @@ class EvaluateUser extends GetView<EvaluateAndReportController> {
   }
 
   Widget userList() {
-    return ListView.builder(
-      itemCount: 1,
-      itemBuilder: (context, index) => eachUser(index),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 60),
+      child: ListView.builder(
+        itemCount: controller.users.length,
+        itemBuilder: (context, index) => eachUser(index),
+      ),
     );
   }
 
   Widget eachUser(int i) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      decoration: bottomBorderBox,
-      margin: const EdgeInsets.only(bottom: 7),
-      // color: Colors.white,
-      height: 190,
-      child: Column(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(backgroundColor: Colors.grey),
-                    const SizedBox(width: 10),
-                    Text("닉네임", style: postTitleStyle),
-                    const SizedBox(width: 10),
-                    Text("매너온도", style: postDetailStyle),
-                    const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Icon(
-                        Icons.fiber_manual_record,
-                        size: 3,
-                        color: Colors.grey,
+    print('EvaluateUser.eachUser ${controller.reportDoneList[i]}');
+
+    return Obx(
+      () => Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        decoration: bottomBorderBox,
+        margin: const EdgeInsets.only(bottom: 7),
+        // color: Colors.white,
+        height: 190,
+        child: Column(
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(backgroundColor: Colors.grey),
+                      const SizedBox(width: 10),
+                      Text(
+                        controller.users[i].nickname,
+                        overflow: TextOverflow.ellipsis,
+                        style: postTitleStyle,
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: controller.reportDoneList[i]
+                        ? null
+                        : () {
+                            print("신고하기");
+                            Get.toNamed(
+                              Routes.REPORT,
+                              arguments: {
+                                "reportedAccountId":
+                                    controller.users[i].accountId
+                              },
+                            );
+                          },
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0, 8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "신고",
+                            style: TextStyle(
+                              color: controller.reportDoneList[i]
+                                  ? Colors.grey
+                                  : Colors.red,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 20,
+                            color: controller.reportDoneList[i]
+                                ? Colors.grey
+                                : Colors.red,
+                          )
+                        ],
                       ),
                     ),
-                    Text("36.4", style: postDetailStyle),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {
-                    print("신고하기");
-                    Get.toNamed(
-                      Routes.REPORT,
-                      arguments: {"reportedAccountId": 3},
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0, 8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "신고",
-                          style: TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.w800),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 20,
-                          color: Colors.red,
-                        )
-                      ],
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Divider(height: 0, thickness: 1),
-          Expanded(
-            flex: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                evaluationCriteria(
-                  "시간 약속을 잘 지켜요",
-                  Icons.timer_outlined,
-                  i,
-                  0,
-                ),
-                VerticalDivider(width: 0, thickness: 1),
-                evaluationCriteria(
-                  "친절해요",
-                  Icons.mood_rounded,
-                  i,
-                  1,
-                ),
-                VerticalDivider(width: 0, thickness: 1),
-                evaluationCriteria(
-                  "응답이 빨라요",
-                  Icons.bolt_outlined,
-                  i,
-                  2,
-                ),
-              ],
-            ),
-          )
-        ],
+            Divider(height: 0, thickness: 1),
+            Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  evaluationCriteria(
+                    "시간 약속을 잘 지켜요",
+                    Icons.timer_outlined,
+                    i,
+                    0,
+                  ),
+                  VerticalDivider(width: 0, thickness: 1),
+                  evaluationCriteria(
+                    "친절해요",
+                    Icons.mood_rounded,
+                    i,
+                    1,
+                  ),
+                  VerticalDivider(width: 0, thickness: 1),
+                  evaluationCriteria(
+                    "응답이 빨라요",
+                    Icons.bolt_outlined,
+                    i,
+                    2,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

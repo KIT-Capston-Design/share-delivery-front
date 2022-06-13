@@ -7,6 +7,7 @@ import 'package:share_delivery/src/data/model/community/post_update_request_dto/
 import 'package:share_delivery/src/data/model/user/user_location/user_location.dart';
 import 'package:share_delivery/src/data/provider/community/post/community_api_client.dart';
 import 'package:share_delivery/src/data/provider/widgets/user_location_local_client.dart';
+import 'package:share_delivery/src/utils/image_util.dart';
 
 class PostRegisterRepository {
   CommunityApiClient apiClient;
@@ -66,6 +67,7 @@ class PostRegisterRepository {
     UserLocation userLocation,
     String content,
     String category,
+    List<String> deletedImages,
     List<String> images,
   ) async {
     // TODO: 위치 공유 넣기
@@ -81,15 +83,25 @@ class PostRegisterRepository {
       coordinate: coordinate,
       category: category,
       content: content,
+      deletedImages: deletedImages,
     );
 
     // 이미지
+    Logger().i(images);
+
     List<File> postImages = [];
     for (int i = 0; i < images.length; i++) {
-      postImages.add(File(images[i]));
-      print(
-          'PostRegisterRepository.registerPost - image file - ${File(images[i])}');
+      String imageURL = images[i];
+      if (imageURL.startsWith("/images")) {
+        File remoteImage = File(imagePathWithHost(images[i]));
+        remoteImage.renameSync(images[i]);
+        postImages.add(remoteImage);
+      } else {
+        postImages.add(File(images[i]));
+      }
     }
+
+    Logger().i(postImages);
 
     print('PostRegisterRepository.updatePost - $post');
 
